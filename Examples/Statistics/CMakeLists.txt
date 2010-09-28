@@ -1,8 +1,11 @@
 project(StatisticsExamples)
 include_regular_expression("^.*$")
 
+
 add_executable(BayesianPluginClassifier BayesianPluginClassifier.cxx )
 target_link_libraries(BayesianPluginClassifier ITKStatistics)
+
+if(FALSE)
 
 add_executable( BayesianClassifierInitializer BayesianClassifierInitializer.cxx )
 target_link_libraries(BayesianClassifierInitializer ITKStatistics ITKIO)
@@ -17,8 +20,10 @@ add_executable(ExpectationMaximizationMixtureModelEstimator ExpectationMaximizat
 target_link_libraries(ExpectationMaximizationMixtureModelEstimator
 ITKStatistics)
 
-add_executable(GaussianDensityFunction GaussianDensityFunction.cxx )
-target_link_libraries(GaussianDensityFunction ITKCommon)
+endif(FALSE)
+
+add_executable(GaussianMembershipFunction GaussianMembershipFunction.cxx )
+target_link_libraries(GaussianMembershipFunction ITKCommon)
 
 add_executable(Histogram Histogram.cxx )
 target_link_libraries(Histogram ITKStatistics)
@@ -31,6 +36,8 @@ target_link_libraries(KdTreeBasedKMeansClustering ITKStatistics)
 
 add_executable(ListSample ListSample.cxx )
 target_link_libraries(ListSample ITKCommon)
+
+if(FALSE)
 
 add_executable(ListSampleToHistogramFilter ListSampleToHistogramFilter.cxx )
 target_link_libraries(ListSampleToHistogramFilter ITKStatistics)
@@ -186,3 +193,5 @@ target_link_libraries( StatisticsExamplesTests3 ITKIO ITKStatistics)
 endif(BUILD_TESTING)
 
 endif( NOT ITK_DISABLE_CXX_TESTING )
+
+endif(FALSE)

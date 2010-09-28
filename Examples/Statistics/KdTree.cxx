@@ -36,7 +36,7 @@
 #include "itkKdTree.h"
 #include "itkKdTreeGenerator.h"
 #include "itkWeightedCentroidKdTreeGenerator.h"
-#include "itkEuclideanDistance.h"
+#include "itkEuclideanDistanceMetric.h"
 // Software Guide : EndCodeSnippet
 
 int main()
@@ -195,7 +195,7 @@ int main()
   // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
-  typedef itk::Statistics::EuclideanDistance< MeasurementVectorType > 
+  typedef itk::Statistics::EuclideanDistanceMetric< MeasurementVectorType >
     DistanceMetricType;
   DistanceMetricType::Pointer distanceMetric = DistanceMetricType::New();
 
@@ -309,6 +309,5 @@ int main()
               << std::endl;
     }
   // Software Guide : EndCodeSnippet
-
   return 0;
 }
