@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -21,24 +21,24 @@
 // Software Guide : BeginLatex
 // \index{itk::Statistics::Maximum\-Ratio\-Decision\-Rule}
 //
-// The \code{Evaluate()} method of the \doxygen{MaximumRatioDecisionRule}
-// returns the index, $i$ if 
+// The \code{Evaluate()} method of the \doxygen{MaximumRatioDecisionRule2}
+// returns the index, $i$ if
 // \begin{equation}
 //   \frac{f_{i}(\overrightarrow{x})}{f_{j}(\overrightarrow{x})} >
-//   \frac{K_{j}}{K_{i}} \textrm{ for all } j \not= i 
-// \end{equation} 
+//   \frac{K_{j}}{K_{i}} \textrm{ for all } j \not= i
+// \end{equation}
 // where the $i$ is the index of a class which has membership function
 // $f_{i}$ and its prior value (usually, the \emph{a priori}
-// probability of the class) is $K_{i}$ 
+// probability of the class) is $K_{i}$
 //
 // We include the header files for the class as well as the header file for
 // the \code{std::vector} class that will be the container for the
-// discriminant scores.  
+// discriminant scores.
 //
 // Software Guide : EndLatex
 
 // Software Guide : BeginCodeSnippet
-#include "itkMaximumRatioDecisionRule.h"
+#include "itkMaximumRatioDecisionRule2.h"
 #include <vector>
 // Software Guide : EndCodeSnippet
 
@@ -49,10 +49,10 @@ int main(int, char*[])
   // The instantiation of the function is done through the usual
   // \code{New()} method and a smart pointer.
   //
-  // Software Guide : EndLatex 
+  // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
-  typedef itk::MaximumRatioDecisionRule DecisionRuleType;
+  typedef itk::Statistics::MaximumRatioDecisionRule2 DecisionRuleType;
   DecisionRuleType::Pointer decisionRule = DecisionRuleType::New();
   // Software Guide : EndCodeSnippet
 
@@ -62,9 +62,9 @@ int main(int, char*[])
   // We create the discriminant score vector and fill it with three
   // values. We also create a vector (\code{aPrioris}) for the \emph{a
   // priori} values. The \code{Evaluate( discriminantScores )} will
-  // return 1. 
+  // return 1.
   //
-  // Software Guide : EndLatex 
+  // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
   std::vector< double > discriminantScores;
@@ -78,7 +78,7 @@ int main(int, char*[])
   aPrioris.push_back( 0.1 );
 
   decisionRule->SetAPriori( aPrioris );
-  std::cout << "MaximumRatioDecisionRule: The index of the chosen = " 
+  std::cout << "MaximumRatioDecisionRule: The index of the chosen = "
             << decisionRule->Evaluate( discriminantScores )
             << std::endl;
   // Software Guide : EndCodeSnippet

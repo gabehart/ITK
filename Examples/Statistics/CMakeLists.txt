@@ -39,10 +39,10 @@ target_link_libraries(SampleToHistogramFilter ITKStatistics)
 add_executable(MaximumDecisionRule2 MaximumDecisionRule2.cxx )
 target_link_libraries(MaximumDecisionRule2 ITKCommon ITKStatistics)
 
-if(FALSE)
+add_executable(MaximumRatioDecisionRule2 MaximumRatioDecisionRule2.cxx )
+target_link_libraries(MaximumRatioDecisionRule2 ITKCommon ITKStatistics)
 
-add_executable(MaximumRatioDecisionRule MaximumRatioDecisionRule.cxx )
-target_link_libraries(MaximumRatioDecisionRule ITKCommon)
+if(FALSE)
 
 add_executable(MembershipSample MembershipSample.cxx )
 target_link_libraries(MembershipSample ITKCommon)
