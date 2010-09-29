@@ -14,13 +14,9 @@ target_link_libraries(BayesianClassifier ITKStatistics ITKIO)
 add_executable(EuclideanDistanceMetric EuclideanDistanceMetric.cxx )
 target_link_libraries(EuclideanDistanceMetric ITKCommon)
 
-if(FALSE)
-
 add_executable(ExpectationMaximizationMixtureModelEstimator ExpectationMaximizationMixtureModelEstimator.cxx )
 target_link_libraries(ExpectationMaximizationMixtureModelEstimator
 ITKStatistics)
-
-endif(FALSE)
 
 add_executable(GaussianMembershipFunction GaussianMembershipFunction.cxx )
 target_link_libraries(GaussianMembershipFunction ITKCommon)
