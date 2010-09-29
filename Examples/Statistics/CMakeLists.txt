@@ -5,10 +5,10 @@ include_regular_expression("^.*$")
 add_executable(BayesianPluginClassifier BayesianPluginClassifier.cxx )
 target_link_libraries(BayesianPluginClassifier ITKStatistics)
 
-if(FALSE)
-
 add_executable( BayesianClassifierInitializer BayesianClassifierInitializer.cxx )
 target_link_libraries(BayesianClassifierInitializer ITKStatistics ITKIO)
+
+if(FALSE)
 
 add_executable( BayesianClassifier BayesianClassifier.cxx )
 target_link_libraries(BayesianClassifier ITKStatistics ITKIO)
