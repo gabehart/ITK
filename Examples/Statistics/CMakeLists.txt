@@ -8,10 +8,10 @@ target_link_libraries(BayesianPluginClassifier ITKStatistics)
 add_executable( BayesianClassifierInitializer BayesianClassifierInitializer.cxx )
 target_link_libraries(BayesianClassifierInitializer ITKStatistics ITKIO)
 
-if(FALSE)
-
 add_executable( BayesianClassifier BayesianClassifier.cxx )
 target_link_libraries(BayesianClassifier ITKStatistics ITKIO)
+
+if(FALSE)
 
 add_executable(EuclideanDistance EuclideanDistance.cxx )
 target_link_libraries(EuclideanDistance ITKCommon)
