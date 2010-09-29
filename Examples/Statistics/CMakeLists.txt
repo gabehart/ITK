@@ -42,10 +42,10 @@ target_link_libraries(MaximumDecisionRule2 ITKCommon ITKStatistics)
 add_executable(MaximumRatioDecisionRule2 MaximumRatioDecisionRule2.cxx )
 target_link_libraries(MaximumRatioDecisionRule2 ITKCommon ITKStatistics)
 
-if(FALSE)
-
 add_executable(MembershipSample MembershipSample.cxx )
 target_link_libraries(MembershipSample ITKCommon)
+
+if(FALSE)
 
 add_executable(MinimumDecisionRule MinimumDecisionRule.cxx )
 target_link_libraries(MinimumDecisionRule ITKCommon)
