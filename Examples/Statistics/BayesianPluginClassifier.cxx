@@ -31,13 +31,12 @@
 // differs with the previous k-means clustering algorithms in several
 // ways. The biggest difference is that this classifier uses the
 // \subdoxygen{Statistics}{GaussianDensityFunction}s as membership functions
-// instead of the \subdoxygen{Statistics}{EuclideanDistance}. Since the
-// membership function is different, the membership function requires a
-// different set of parameters, mean vectors and covariance matrices. We
-// choose the \subdoxygen{Statistics}{MeanCalculator} (sample mean) and the
-// \subdoxygen{Statistics}{CovarianceCalculator} (sample covariance) for the
-// estimation algorithms of the two parameters. If we want more robust
-// estimation algorithm, we can replace these estimation algorithms with more
+// instead of the \subdoxygen{Statistics}{DistanceToCentroidMembershipFunction}.
+// Since the membership function is different, the membership function requires
+// a different set of parameters, mean vectors and covariance matrices. We
+// choose the \subdoxygen{Statistics}{CovarianceSampleFilter} (sample covariance)
+// for the estimation algorithms of the two parameters. If we want a more robust
+// estimation algorithm, we can replace this estimation algorithm with more
 // alternatives without changing other components in the classifier system.
 // 
 // It is a bad idea to use the same sample for test and training
@@ -67,7 +66,7 @@
 
 // Software Guide : BeginLatex
 //
-// The following two files provides us the parameter estimation algorithms.
+// The following file provides us the parameter estimation algorithm.
 //
 // Software Guide : EndLatex
 
@@ -121,8 +120,8 @@ int main( int,  char *[])
   typedef itk::Vector< double, measurementVectorLength > MeasurementVectorType;
   typedef itk::Statistics::ListSample< MeasurementVectorType > SampleType;
   SampleType::Pointer sample = SampleType::New();
-  sample->SetMeasurementVectorSize( measurementVectorLength ); // length of measurement vectors
-                                         // in the sample.
+  sample->SetMeasurementVectorSize( measurementVectorLength ); // length of measurement
+                                                               // vectors in the sample.
 
   typedef itk::Statistics::Subsample< SampleType > ClassSampleType;
   std::vector< ClassSampleType::Pointer > classSamples;
@@ -185,10 +184,9 @@ int main( int,  char *[])
   // Software Guide : BeginLatex
   //
   // In the following code snippet, notice that the template argument for the
-  // MeanCalculator and CovarianceCalculator is \code{ClassSampleType} (i.e.,
-  // type of Subsample) instead of SampleType (i.e., type of ListSample). This
-  // is because the parameter estimation algorithms are applied to the class
-  // sample.
+  // CovarianceCalculator is \code{ClassSampleType} (i.e., type of Subsample)
+  // instead of SampleType (i.e., type of ListSample). This is because the
+  //  parameter estimation algorithms are applied to the class sample.
   //
   // Software Guide : EndLatex
 
@@ -200,7 +198,6 @@ int main( int,  char *[])
 
   for ( unsigned int i = 0 ; i < 2 ; ++i )
     {
-    
     covarianceEstimators.push_back( CovarianceEstimatorType::New() );
     covarianceEstimators[i]->SetInput( classSamples[i] );
     covarianceEstimators[i]->Update();
@@ -227,12 +224,12 @@ int main( int,  char *[])
   // Software Guide : BeginLatex
   //
   // After creating a SampleClassifier object and a
-  // MaximumRatioDecisionRule object, we plug in the
+  // MaximumRatioDecisionRule2 object, we plug in the
   // \code{decisionRule} and the \code{sample} to the classifier. Then,
   // we specify the number of classes that will be considered using
   // the \code{SetNumberOfClasses()} method. 
   //
-  // The MaximumRatioDecisionRule requires a vector of \emph{a
+  // The MaximumRatioDecisionRule2 requires a vector of \emph{a
   // priori} probability values. Such \emph{a priori} probability will
   // be the $P(\omega_{i})$ of the following variation of the Bayes
   // decision rule: 
@@ -259,10 +256,10 @@ int main( int,  char *[])
   DecisionRuleType::Pointer decisionRule = DecisionRuleType::New();
 
   DecisionRuleType::APrioriVectorType aPrioris;
-  aPrioris.push_back( classSamples[0]->GetTotalFrequency() 
-                      / sample->GetTotalFrequency() ) ; 
-  aPrioris.push_back( classSamples[1]->GetTotalFrequency() 
-                      / sample->GetTotalFrequency() ) ; 
+  aPrioris.push_back( (double)classSamples[0]->GetTotalFrequency()
+                      / (double)sample->GetTotalFrequency() ) ;
+  aPrioris.push_back( (double)classSamples[1]->GetTotalFrequency()
+                      / (double)sample->GetTotalFrequency() ) ;
   decisionRule->SetAPriori( aPrioris );
 
   typedef itk::Statistics::SampleClassifierFilter< SampleType > ClassifierType;
@@ -295,11 +292,19 @@ int main( int,  char *[])
   // clusters.
   //
   // In this example, we can imagine that the two clusters are modeled by two
-  // Euclidean distance functions. The distance function (model) has only one
-  // parameter, the mean (centroid) set by the \code{SetOrigin()} method. To
-  // plug-in two distance functions, we call the
-  // \code{AddMembershipFunction()} method. Then invocation of the
-  // \code{Update()} method will perform the classification.
+  // Gaussian distribution functions. The distribution functions have two
+  // parameters, the mean, set by the \code{SetMean()} method, and the
+  // covariance, set by the \code{SetCovariance()} method. To plug-in two
+  // distribution functions, we create a new instance of
+  // \code{MembershipFunctionVectorObjectType} and populate its internal vector
+  // with new instances of \code{MembershipFunction}
+  // (i.e. GaussianMembershipFunction). This is done by calling the \code{Get()}
+  // method of \code{membershipFunctionVectorObject} to get the internal
+  // vector, populating this vector with two new membership functions and then
+  // calling
+  // \code{membershipFunctionVectorObject->Set( membershipFunctionVector )}.
+  // Finally, the invocation of the \code{Update()} method will perform the
+  // classification.
   // 
   // Software Guide : EndLatex
 
@@ -335,19 +340,19 @@ int main( int,  char *[])
   // its class label in the \code{sample}.
   //
   // Software Guide : EndLatex
-/*
+
   // Software Guide : BeginCodeSnippet
-  ClassifierType::OutputType* membershipSample = classifier->GetOutput();
-  ClassifierType::OutputType::ConstIterator iter = membershipSample->Begin();
+  const ClassifierType::MembershipSampleType* membershipSample = classifier->GetOutput();
+  ClassifierType::MembershipSampleType::ConstIterator iter = membershipSample->Begin();
 
   while ( iter != membershipSample->End() )
     {
     std::cout << "measurement vector = " << iter.GetMeasurementVector()
-              << "class label = " << iter.GetClassLabel() << std::endl;
+              << " class label = " << iter.GetClassLabel() << std::endl;
     ++iter;
     }
   // Software Guide : EndCodeSnippet
-*/
+
   return 0;
 }
 
