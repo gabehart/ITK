@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    EuclideanDistance.cxx
+  Module:    EuclideanDistanceMetric.cxx
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -19,9 +19,9 @@
 #endif
 
 // Software Guide : BeginLatex
-// \index{itk::Statistics::EuclideanDistance}
+// \index{itk::Statistics::EuclideanDistanceMetric}
 //
-// The Euclidean distance function (\subdoxygen{Statistics}{EuclideanDistance}
+// The Euclidean distance function (\subdoxygen{Statistics}{EuclideanDistanceMetric}
 // requires as template parameter the type of the measurement vector. We can
 // use this function for any subclass of the \doxygen{FixedArray}. As a
 // subclass of the \subdoxygen{Statistics}{DistanceMetric}, it has two basic
@@ -30,21 +30,21 @@
 // the distance between its argument (a measurement vector) and the measurement
 // vector set by the \code{SetOrigin()} method.
 //
-// In addition to the two methods, EuclideanDistance has two more
+// In addition to the two methods, EuclideanDistanceMetric has two more
 // methods that return the distance of two measurements ---
 // \code{Evaluate(measurement vector, measurement vector)} and the
 // coordinate distance between two measurements (not vectors) ---
 // \code{Evaluate(measurement, measurement)}. The argument type of the
 // latter method is the type of the component of the measurement vector.
-// 
+//
 // We include the header files for the class and the \doxygen{Vector}.
 //
-// Software Guide : EndLatex 
+// Software Guide : EndLatex
 
 // Software Guide : BeginCodeSnippet
 #include "itkVector.h"
 #include "itkArray.h"
-#include "itkEuclideanDistance.h"
+#include "itkEuclideanDistanceMetric.h"
 // Software Guide : EndCodeSnippet
 
 // Software Guide : BeginLatex
@@ -53,7 +53,7 @@
 // the Euclidean distance function. As a result, the measurement type
 // is \code{float}.
 //
-// Software Guide : EndLatex 
+// Software Guide : EndLatex
 
 int main(int, char*[])
 {
@@ -66,10 +66,10 @@ int main(int, char*[])
   // The instantiation of the function is done through the usual
   // \code{New()} method and a smart pointer.
   //
-  // Software Guide : EndLatex 
+  // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
-  typedef itk::Statistics::EuclideanDistance< MeasurementVectorType > 
+  typedef itk::Statistics::EuclideanDistanceMetric< MeasurementVectorType >
     DistanceMetricType;
   DistanceMetricType::Pointer distanceMetric = DistanceMetricType::New();
   // Software Guide : EndCodeSnippet
@@ -83,7 +83,7 @@ int main(int, char*[])
   // \code{itk::Vector< double, length of the measurement vector of the
   // each distance metric instance>}.
   //
-  // Software Guide : EndLatex 
+  // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
   // The Distance metric does not know about the length of the measurement vectors.
@@ -104,29 +104,29 @@ int main(int, char*[])
 
   queryPointB[0] = 3;
   queryPointB[1] = 3;
-  // Software Guide : EndCodeSnippet 
+  // Software Guide : EndCodeSnippet
 
 
   // Software Guide : BeginLatex
   //
   // In the following code snippet, we show the uses of the three different
-  // \code{Evaluate()} methods.  
+  // \code{Evaluate()} methods.
   //
-  // Software Guide : EndLatex 
-  
-  // Software Guide : BeginCodeSnippet 
+  // Software Guide : EndLatex
+
+  // Software Guide : BeginCodeSnippet
   distanceMetric->SetOrigin( originPoint );
   std::cout << "Euclidean distance between the origin and the query point A = "
-            << distanceMetric->Evaluate( queryPointA ) 
+            << distanceMetric->Evaluate( queryPointA )
             << std::endl;
-  
-  std::cout << "Euclidean distance between the two query points (A and B) = " 
-            << distanceMetric->Evaluate( queryPointA, queryPointB ) 
+
+  std::cout << "Euclidean distance between the two query points (A and B) = "
+            << distanceMetric->Evaluate( queryPointA, queryPointB )
             << std::endl;
-  
-  std::cout << "Coordinate distance between " 
+
+  std::cout << "Coordinate distance between "
             << "the first components of the two query points = "
-            << distanceMetric->Evaluate( queryPointA[0], queryPointB[0] ) 
+            << distanceMetric->Evaluate( queryPointA[0], queryPointB[0] )
             << std::endl;
   // Software Guide : EndCodeSnippet
 

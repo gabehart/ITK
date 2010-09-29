@@ -11,10 +11,10 @@ target_link_libraries(BayesianClassifierInitializer ITKStatistics ITKIO)
 add_executable( BayesianClassifier BayesianClassifier.cxx )
 target_link_libraries(BayesianClassifier ITKStatistics ITKIO)
 
-if(FALSE)
+add_executable(EuclideanDistanceMetric EuclideanDistanceMetric.cxx )
+target_link_libraries(EuclideanDistanceMetric ITKCommon)
 
-add_executable(EuclideanDistance EuclideanDistance.cxx )
-target_link_libraries(EuclideanDistance ITKCommon)
+if(FALSE)
 
 add_executable(ExpectationMaximizationMixtureModelEstimator ExpectationMaximizationMixtureModelEstimator.cxx )
 target_link_libraries(ExpectationMaximizationMixtureModelEstimator
