@@ -45,10 +45,10 @@ target_link_libraries(MaximumRatioDecisionRule2 ITKCommon ITKStatistics)
 add_executable(MembershipSample MembershipSample.cxx )
 target_link_libraries(MembershipSample ITKCommon)
 
-if(FALSE)
+add_executable(MinimumDecisionRule2 MinimumDecisionRule2.cxx )
+target_link_libraries(MinimumDecisionRule2 ITKCommon ITKStatistics)
 
-add_executable(MinimumDecisionRule MinimumDecisionRule.cxx )
-target_link_libraries(MinimumDecisionRule ITKCommon)
+if(FALSE)
 
 add_executable(NeighborhoodSampler NeighborhoodSampler.cxx )
 target_link_libraries(NeighborhoodSampler ITKCommon)
