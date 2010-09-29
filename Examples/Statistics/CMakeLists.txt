@@ -38,9 +38,6 @@ target_link_libraries(SampleToHistogramFilter ITKStatistics)
 
 if(FALSE)
 
-add_executable(ListSampleToHistogramGenerator ListSampleToHistogramGenerator.cxx )
-target_link_libraries(ListSampleToHistogramGenerator ITKStatistics)
-
 add_executable(MaximumDecisionRule MaximumDecisionRule.cxx )
 target_link_libraries(MaximumDecisionRule ITKCommon)
 
