@@ -47,11 +47,14 @@ target_link_libraries(MembershipSample ITKCommon)
 
 add_executable(MinimumDecisionRule2 MinimumDecisionRule2.cxx )
 target_link_libraries(MinimumDecisionRule2 ITKCommon ITKStatistics)
+#
+# At the moment, itkNeighborhoodSampler is incomplete, so this example
+# can't be updated
+#
+#add_executable(NeighborhoodSampler NeighborhoodSampler.cxx )
+#target_link_libraries(NeighborhoodSampler ITKCommon)
 
 if(FALSE)
-
-add_executable(NeighborhoodSampler NeighborhoodSampler.cxx )
-target_link_libraries(NeighborhoodSampler ITKCommon)
 
 add_executable(NormalVariateGenerator NormalVariateGenerator.cxx )
 target_link_libraries(NormalVariateGenerator ITKStatistics)
