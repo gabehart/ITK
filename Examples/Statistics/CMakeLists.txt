@@ -33,10 +33,10 @@ target_link_libraries(KdTreeBasedKMeansClustering ITKStatistics)
 add_executable(ListSample ListSample.cxx )
 target_link_libraries(ListSample ITKCommon)
 
-if(FALSE)
+add_executable(SampleToHistogramFilter SampleToHistogramFilter.cxx )
+target_link_libraries(SampleToHistogramFilter ITKStatistics)
 
-add_executable(ListSampleToHistogramFilter ListSampleToHistogramFilter.cxx )
-target_link_libraries(ListSampleToHistogramFilter ITKStatistics)
+if(FALSE)
 
 add_executable(ListSampleToHistogramGenerator ListSampleToHistogramGenerator.cxx )
 target_link_libraries(ListSampleToHistogramGenerator ITKStatistics)

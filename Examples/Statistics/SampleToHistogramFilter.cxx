@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    ListSampleToHistogramFilter.cxx
+  Module:    SampleToHistogramFiler.cxx
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -28,19 +28,19 @@
 // \subdoxygen{Statistics}{ImageToListAdaptor}, or
 // \subdoxygen{Statistics}{PointSetToListSample}) to use less memory or to
 // perform a particular type od analysis. In such cases, we can import data
-// from a list type sample to a \subdoxygen{Statistics}{Histogram} object
-// using the \subdoxygen{Statistics}{ListSampleToHistogramFilter}.
+// from a sample type to a \subdoxygen{Statistics}{Histogram} object
+// using the \subdoxygen{Statistics}{SampleToHistogramFiler}.
 //
 // We use a ListSample object as the input for the filter. We include the
 // header files for the ListSample and Histogram classes, as well as the
 // filter.
 //
-// Software Guide : EndLatex 
+// Software Guide : EndLatex
 
 // Software Guide : BeginCodeSnippet
 #include "itkListSample.h"
 #include "itkHistogram.h"
-#include "itkListSampleToHistogramFilter.h"
+#include "itkSampleToHistogramFilter.h"
 // Software Guide : EndCodeSnippet
 
 // Software Guide : BeginLatex
@@ -63,13 +63,13 @@ int main()
   // two-component \code{int} measurement vectors and put the measurement
   // vectors: [1,1] - 1 time, [2,2] - 2 times, [3,3] - 3 times, [4,4] - 4
   // times, [5,5] - 5 times into the \code{listSample}.
-  // 
+  //
   // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
   typedef int MeasurementType;
   const unsigned int MeasurementVectorLength = 2;
-  typedef itk::Vector< MeasurementType , MeasurementVectorLength > 
+  typedef itk::Vector< MeasurementType , MeasurementVectorLength >
                                                                MeasurementVectorType;
   typedef itk::Statistics::ListSample< MeasurementVectorType > ListSampleType;
   ListSampleType::Pointer listSample = ListSampleType::New();
@@ -92,33 +92,53 @@ int main()
 
   // Software Guide : BeginLatex
   //
-  // Here, we create a Histogram object with equal interval bins using the
-  // \code{Initalize()} method.
+  // Here, we set up the size and bound of the output histogram.
   //
   // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
   typedef float HistogramMeasurementType;
-  typedef itk::Statistics::Histogram< HistogramMeasurementType, 2 >  
+  const unsigned int numberOfComponents = 2;
+  typedef itk::Statistics::Histogram< HistogramMeasurementType >
     HistogramType;
-  HistogramType::Pointer histogram = HistogramType::New();
 
-  HistogramType::SizeType size;
+  HistogramType::SizeType size( numberOfComponents );
   size.Fill(5);
 
-  HistogramType::MeasurementVectorType lowerBound;
-  HistogramType::MeasurementVectorType upperBound;
+  HistogramType::MeasurementVectorType lowerBound( numberOfComponents );
+  HistogramType::MeasurementVectorType upperBound( numberOfComponents );
 
   lowerBound[0] = 0.5;
   lowerBound[1] = 0.5;
 
   upperBound[0] = 5.5;
   upperBound[1] = 5.5;
-
-  histogram->Initialize( size, lowerBound, upperBound );
   // Software Guide : EndCodeSnippet
 
 
+  // Software Guide : BeginLatex
+  //
+  // Now, we set up the \code{SampleToHistogramFilter} object by passing
+  // \code{listSample} as the input and initializing the histogram size
+  // and bounds with the \code{SetHistogramSize()},
+  // \code{SetHistogramBinMinimum()}, and \code{SetHistogramBinMaximum()}
+  // methods. We execute the filter by calling the \code{Update()}
+  // method.
+  //
+  // Software Guide : EndLatex
+
+  // Software Guide : BeginCodeSnippet
+
+  // Software Guide : EndCodeSnippet
+  typedef itk::Statistics::SampleToHistogramFilter< ListSampleType,
+                           HistogramType > FilterType;
+  FilterType::Pointer filter = FilterType::New();
+
+  filter->SetInput( listSample );
+  filter->SetHistogramSize( size );
+  filter->SetHistogramBinMinimum( lowerBound );
+  filter->SetHistogramBinMaximum( upperBound );
+  filter->Update();
   // Software Guide : BeginLatex
   //
   // The \code{Size()} and \code{GetTotalFrequency()} methods return the same
@@ -127,15 +147,10 @@ int main()
   // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
-  typedef itk::Statistics::ListSampleToHistogramFilter< ListSampleType, 
-                           HistogramType > FilterType;
-  FilterType::Pointer filter = FilterType::New();
 
-  filter->SetListSample( listSample );
-  filter->SetHistogram( histogram );
-  filter->Update();
+  const HistogramType* histogram = filter->GetOutput();
 
-  HistogramType::Iterator iter = histogram->Begin();
+  HistogramType::ConstIterator iter = histogram->Begin();
   while ( iter != histogram->End() )
     {
     std::cout << "Measurement vectors = " << iter.GetMeasurementVector()
@@ -144,7 +159,7 @@ int main()
     }
 
   std::cout << "Size = " << histogram->Size() << std::endl;
-  std::cout << "Total frequency = " 
+  std::cout << "Total frequency = "
             << histogram->GetTotalFrequency() << std::endl;
   // Software Guide : EndCodeSnippet
 
