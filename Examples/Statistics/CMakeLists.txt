@@ -57,11 +57,10 @@ target_link_libraries(MinimumDecisionRule2 ITKCommon ITKStatistics)
 add_executable(NormalVariateGenerator NormalVariateGenerator.cxx )
 target_link_libraries(NormalVariateGenerator ITKStatistics)
 
+add_executable(PointSetToListSampleAdaptor PointSetToListSampleAdaptor.cxx )
+target_link_libraries(PointSetToListSampleAdaptor ITKCommon)
+
 if(FALSE)
-
-add_executable(PointSetToListAdaptor PointSetToListAdaptor.cxx )
-target_link_libraries(PointSetToListAdaptor ITKCommon)
-
 
 add_executable(SampleStatistics SampleStatistics.cxx )
 target_link_libraries(SampleStatistics ITKCommon)
