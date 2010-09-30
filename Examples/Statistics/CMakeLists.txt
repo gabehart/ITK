@@ -69,10 +69,10 @@ target_link_libraries(SampleStatistics ITKCommon)
 #add_executable(SampleToHistogramProjectionFilter SampleToHistogramProjectionFilter.cxx )
 #target_link_libraries(SampleToHistogramProjectionFilter ITKStatistics)
 
-if(FALSE)
-
 add_executable(SampleSorting SampleSorting.cxx )
 target_link_libraries(SampleSorting ITKCommon)
+
+if(FALSE)
 
 add_executable(WeightedSampleStatistics WeightedSampleStatistics.cxx )
 target_link_libraries(WeightedSampleStatistics ITKCommon)
