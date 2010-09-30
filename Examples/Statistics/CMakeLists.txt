@@ -54,10 +54,10 @@ target_link_libraries(MinimumDecisionRule2 ITKCommon ITKStatistics)
 #add_executable(NeighborhoodSampler NeighborhoodSampler.cxx )
 #target_link_libraries(NeighborhoodSampler ITKCommon)
 
-if(FALSE)
-
 add_executable(NormalVariateGenerator NormalVariateGenerator.cxx )
 target_link_libraries(NormalVariateGenerator ITKStatistics)
+
+if(FALSE)
 
 add_executable(PointSetToListAdaptor PointSetToListAdaptor.cxx )
 target_link_libraries(PointSetToListAdaptor ITKCommon)
