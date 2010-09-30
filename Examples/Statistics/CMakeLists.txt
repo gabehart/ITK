@@ -63,10 +63,13 @@ target_link_libraries(PointSetToListSampleAdaptor ITKCommon)
 add_executable(SampleStatistics SampleStatistics.cxx )
 target_link_libraries(SampleStatistics ITKCommon)
 
-if(FALSE)
+#
+# This one doesn't seem to exist any more
+#
+#add_executable(SampleToHistogramProjectionFilter SampleToHistogramProjectionFilter.cxx )
+#target_link_libraries(SampleToHistogramProjectionFilter ITKStatistics)
 
-add_executable(SampleToHistogramProjectionFilter SampleToHistogramProjectionFilter.cxx )
-target_link_libraries(SampleToHistogramProjectionFilter ITKStatistics)
+if(FALSE)
 
 add_executable(SampleSorting SampleSorting.cxx )
 target_link_libraries(SampleSorting ITKCommon)
