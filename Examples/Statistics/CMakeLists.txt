@@ -75,10 +75,10 @@ target_link_libraries(SampleSorting ITKCommon)
 add_executable(WeightedSampleStatistics WeightedSampleStatistics.cxx )
 target_link_libraries(WeightedSampleStatistics ITKCommon)
 
-if(FALSE)
-
 add_executable(ImageHistogram3 ImageHistogram3.cxx )
 target_link_libraries(ImageHistogram3 ITKIO ITKStatistics )
+
+if(FALSE)
 
 add_executable(ScalarImageMarkovRandomField1 ScalarImageMarkovRandomField1.cxx )
 target_link_libraries(ScalarImageMarkovRandomField1 ITKIO )
