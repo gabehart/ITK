@@ -78,10 +78,10 @@ target_link_libraries(WeightedSampleStatistics ITKCommon)
 add_executable(ImageHistogram3 ImageHistogram3.cxx )
 target_link_libraries(ImageHistogram3 ITKIO ITKStatistics )
 
-if(FALSE)
-
 add_executable(ScalarImageMarkovRandomField1 ScalarImageMarkovRandomField1.cxx )
 target_link_libraries(ScalarImageMarkovRandomField1 ITKIO )
+
+if(FALSE)
 
 add_executable(ScalarImageKmeansClassifier ScalarImageKmeansClassifier.cxx )
 target_link_libraries(ScalarImageKmeansClassifier ITKIO )
