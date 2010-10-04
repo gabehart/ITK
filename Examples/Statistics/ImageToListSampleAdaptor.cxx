@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    ImageToListAdaptor.cxx
+  Module:    ImageToListSampleAdaptor.cxx
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -20,24 +20,24 @@
 
 // Software Guide : BeginLatex
 //
-// This example shows how to instantiate an 
-// \subdoxygen{Statistics}{ImageToListAdaptor} object and plug-in an 
+// This example shows how to instantiate an
+// \subdoxygen{Statistics}{ImageToListSampleAdaptor} object and plug-in an
 // \doxygen{Image} object as the data source for the adaptor.
 //
 // \index{itk::Statistics::Image\-To\-List\-Adaptor}
 // \index{itk::Statistics::Scalar\-Image\-To\-List\-Adaptor|}
 // \index{itk::Statistics::Joint\-Domain\-Image\-To\-List\-Adaptor}
 //
-// In this example, we use the ImageToListAdaptor class that requires the
+// In this example, we use the ImageToListSampleAdaptor class that requires the
 // input type of Image as the template argument. To users of the
-// ImageToListAdaptor, the pixels of the input image are treated as
-// measurement vectors. The ImageToListAdaptor is one of two adaptor classes
+// ImageToListSampleAdaptor, the pixels of the input image are treated as
+// measurement vectors. The ImageToListSampleAdaptor is one of two adaptor classes
 // among the subclasses of the \subdoxygen{Statistics}{Sample}. That means an
-// ImageToListAdaptor object does not store any real data. The data comes
+// ImageToListSampleAdaptor object does not store any real data. The data comes
 // from other ITK data container classes. In this case, an instance of the
 // Image class is the source of the data.
 //
-// To use an ImageToListAdaptor object, include the header file for the
+// To use an ImageToListSampleAdaptor object, include the header file for the
 // class.  Since we are using an adaptor, we also should include the header
 // file for the Image class.  For illustration, we use the
 // \doxygen{RandomImageSource} that generates an image with random pixel
@@ -49,15 +49,15 @@
 // cannot plug-in an image of scalar pixels. However, if we
 // want to use an image with scalar pixels without the help from the
 // ScalarToArrayCastImageFilter, we can use the
-// \subdoxygen{Statistics}{ScalarImageToListAdaptor} class that is derived
-// from the \subdoxygen{Statistics}{ImageToListAdaptor}. The usage of the
-// ScalarImageToListAdaptor is identical to that of the ImageToListAdaptor.
+// \subdoxygen{Statistics}{ScalarImageToListSampleAdaptor} class that is derived
+// from the \subdoxygen{Statistics}{ImageToListSampleAdaptor}. The usage of the
+// ScalarImageToListSampleAdaptor is identical to that of the ImageToListSampleAdaptor.
 //
-// Software Guide : EndLatex 
+// Software Guide : EndLatex
 
 
 // Software Guide : BeginCodeSnippet
-#include "itkImageToListAdaptor.h"
+#include "itkImageToListSampleAdaptor.h"
 #include "itkImage.h"
 #include "itkRandomImageSource.h"
 #include "itkScalarToArrayCastImageFilter.h"
@@ -70,7 +70,7 @@ int main()
   // We assume you already know how to create an image (see
   // Section~\ref{sec:CreatingAnImageSection}). The following code snippet
   // will create a 2D image of float pixels filled with random values.
-  // 
+  //
   // Software Guide :EndLatex
 
   // Software Guide : BeginCodeSnippet
@@ -81,7 +81,7 @@ int main()
 
   random->SetMin(    0.0 );
   random->SetMax( 1000.0 );
-  
+
   typedef FloatImage2DType::SpacingValueType  SpacingValueType;
   typedef FloatImage2DType::SizeValueType     SizeValueType;
   typedef FloatImage2DType::PointValueType    PointValueType;
@@ -132,7 +132,7 @@ int main()
   // Software Guide : EndLatex
 
   // Software Guide : BeginCodeSnippet
-  typedef itk::Statistics::ImageToListAdaptor< ArrayImageType > SampleType;
+  typedef itk::Statistics::ImageToListSampleAdaptor< ArrayImageType > SampleType;
   SampleType::Pointer sample = SampleType::New();
   // Software Guide : EndCodeSnippet
 
@@ -151,23 +151,23 @@ int main()
   // Software Guide : BeginLatex
   //
   // If we are interested only in pixel values, the
-  // ScalarImageToListAdaptor (scalar pixels) and the
-  // ImageToListAdaptor (vector pixels) would be
+  // ScalarImageToListSampleAdaptor (scalar pixels) and the
+  // ImageToListSampleAdaptor (vector pixels) would be
   // sufficient. However, if we want to perform some statistical
   // analysis on spatial information (image index or pixel's physical
   // location) and pixel values altogether, we want to have a
   // measurement vector that consists of a pixel's value and physical
   // position. In that case, we can use the
-  // \subdoxygen{Statistics}{JointDomainImageToListAdaptor}
+  // \subdoxygen{Statistics}{JointDomainImageToListSampleAdaptor}
   // class. With that class, when we call the
   // \code{GetMeasurementVector()} method, the returned measurement
   // vector is composed of the physical coordinates and pixel
   // values. The usage is almost the same as with
-  // ImageToListAdaptor. One important difference between 
-  // JointDomainImageToListAdaptor and the other two image
-  // adaptors is that the JointDomainImageToListAdaptor is the
+  // ImageToListSampleAdaptor. One important difference between
+  // JointDomainImageToListSampleAdaptor and the other two image
+  // adaptors is that the JointDomainImageToListSampleAdaptor is the
   // \code{SetNormalizationFactors()} method. Each component of a
-  // measurement vector from the JointDomainImageToListAdaptor
+  // measurement vector from the JointDomainImageToListSampleAdaptor
   // is divided by the corresponding component value from the supplied
   // normalization factors.
   //

@@ -82,12 +82,12 @@ add_executable(ScalarImageMarkovRandomField1 ScalarImageMarkovRandomField1.cxx )
 target_link_libraries(ScalarImageMarkovRandomField1 ITKIO )
 
 add_executable(ScalarImageKmeansClassifier ScalarImageKmeansClassifier.cxx )
-target_link_libraries(ScalarImageKmeansClassifier ITKIO )
+target_link_libraries(ScalarImageKmeansClassifier ITKIO ITKStatistics )
+
+add_executable(ImageToListSampleAdaptor ImageToListSampleAdaptor.cxx )
+target_link_libraries(ImageToListSampleAdaptor ITKCommon)
 
 if(FALSE)
-
-add_executable(ImageToListAdaptor ImageToListAdaptor.cxx )
-target_link_libraries(ImageToListAdaptor ITKCommon)
 
 add_executable(ImageHistogram1 ImageHistogram1.cxx )
 target_link_libraries(ImageHistogram1 ITKIO ITKStatistics )
